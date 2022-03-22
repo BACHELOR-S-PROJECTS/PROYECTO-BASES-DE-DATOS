@@ -22,8 +22,9 @@ CREATE OR REPLACE PROCEDURE calificar_prueba(Prueba_idUwU INT)
     END;
 $calificar_prueba$ LANGUAGE plpgsql;
 
-SELECT * FROM calificaciones_estudiante;
+-- Para correr los procedimientos se debe ejecutar la view primero
+--SELECT * FROM calificaciones_estudiante;
 
-call calificar_prueba (1);
+--call calificar_prueba (1);
 
-SELECT * FROM calificaciones_estudiante;
+--SELECT * FROM calificaciones_estudiante;
