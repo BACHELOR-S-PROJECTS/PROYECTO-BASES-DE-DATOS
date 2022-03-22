@@ -1,5 +1,5 @@
+--Trigger 1
 --que la calificacion no pueda ser negativa (hay que añadir un atributo prueba que calificacion)
-
 CREATE OR REPLACE FUNCTION revisarNota() RETURNS trigger AS $revisarNota$
     BEGIN        
         IF NEW.Calificacion < 0 THEN
@@ -9,7 +9,6 @@ CREATE OR REPLACE FUNCTION revisarNota() RETURNS trigger AS $revisarNota$
     END; 
 $revisarNota$ LANGUAGE plpgsql;
 
---DROP TRIGGER IF EXISTS nota;
 CREATE TRIGGER nota
     BEFORE INSERT ON Prueba
     FOR EACH ROW
@@ -22,8 +21,8 @@ VALUES
 (2,2,2,'Tercer examen bases de datos','2007-06-30 10:17:25-07',-1);
 SELECT * FROM PRUEBA;
 
- 
--- si se cambia el tipo de pregunta de cerrada a abierta se eliminen las posibles respuestas de dicha pregunta
+--Trigger 2
+-- Cada que se agrega un administrador, se cambia a mayúsculas la primera letra de su nombre y apellido.
 
 CREATE OR REPLACE FUNCTION primeraMayuscula() RETURNS trigger AS $primeraMayuscula$
     BEGIN        
@@ -35,8 +34,8 @@ $primeraMayuscula$ LANGUAGE plpgsql;
 CREATE TRIGGER primeraMayuscula_trigger BEFORE INSERT OR UPDATE ON Administrador
     FOR EACH ROW EXECUTE PROCEDURE primeraMayuscula();
 
-
-
+--Trigger 3
+-- si se cambia el tipo de pregunta de cerrada a abierta se eliminen las posibles respuestas de dicha pregunta
 CREATE OR REPLACE FUNCTION cambioPregunta() RETURNS trigger AS $cambioPregunta$
     BEGIN        
         IF NEW.tipo = 'Abierta' and OLD.tipo = 'Cerrada' THEN
@@ -46,6 +45,7 @@ CREATE OR REPLACE FUNCTION cambioPregunta() RETURNS trigger AS $cambioPregunta$
         RETURN NEW;
     END; 
 $cambioPregunta$ LANGUAGE plpgsql;
+
 
 DROP TRIGGER IF EXISTS tipo_pregunta1 on pregunta;
 CREATE TRIGGER tipo_pregunta1
